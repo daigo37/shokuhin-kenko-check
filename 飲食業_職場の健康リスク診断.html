@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>飲食業 職場の健康リスク診断｜WELL-US</title>
+  <title>飲食業 職場の健康・ウェルビーイングチェックリスト｜WELL-US</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
@@ -521,17 +521,6 @@
     }
     .btn-wellus:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 
-    .data-notice {
-      font-size: 0.72rem;
-      color: var(--color-text-sub);
-      text-align: center;
-      margin-top: 8px;
-      padding: 10px 16px;
-      background: #f7f8fa;
-      border-radius: 6px;
-      line-height: 1.7;
-    }
-
     .retry-btn {
       display: block;
       text-align: center;
@@ -545,8 +534,18 @@
       transition: all 0.2s;
       background: white;
       font-family: 'Noto Sans JP', sans-serif;
+      margin-bottom: 16px;
     }
     .retry-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+    /* ========== DATA NOTICE ========== */
+    .data-notice {
+      font-size: 0.75rem;
+      color: var(--color-text-sub);
+      text-align: center;
+      line-height: 1.6;
+      padding: 0 8px 24px;
+    }
 
     /* ========== ANIMATION ========== */
     @keyframes fadeInUp {
@@ -574,7 +573,7 @@
   <div class="container">
     <div class="progress-info">
       <span class="progress-label">回答の進捗</span>
-      <span class="progress-count" id="progress-count">0 / 11</span>
+      <span class="progress-count" id="progress-count">0 / 10</span>
     </div>
     <div class="progress-bar-bg">
       <div class="progress-bar-fill" id="progress-bar"></div>
@@ -585,9 +584,9 @@
 <!-- HERO -->
 <div class="hero" id="hero-section">
   <div class="container">
-    <div class="hero-tag">🍽️ 飲食業向け 無料診断</div>
-    <h1>職場の健康リスク<br>チェックリスト</h1>
-    <p>10の質問に答えるだけで、あなたの職場の健康リスクレベルと、優先して取り組むべき課題がわかります。</p>
+    <div class="hero-tag">🍽️ 飲食業向け 無料チェックリスト</div>
+    <h1>職場の健康・ウェルビーイング<br>チェックリスト</h1>
+    <p>10の項目に答えるだけで、自社の取り組み状況と優先して手をつけるべき課題がわかります。</p>
     <div class="hero-meta">
       <div class="hero-meta-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -604,7 +603,7 @@
 <!-- START BUTTON (within hero flow) -->
 <div style="text-align:center; padding: 28px 16px 0;" id="start-area">
   <button class="btn-submit" onclick="startQuiz()" style="font-size:1.05rem; padding:18px 56px;">
-    診断をはじめる →
+    チェックをはじめる →
   </button>
 </div>
 
@@ -613,7 +612,7 @@
   <div class="container" id="questions-container"></div>
   <div class="container submit-wrap">
     <button class="btn-submit" id="submit-btn" onclick="submitQuiz()" disabled>
-      診断結果を見る
+      チェック結果を見る
     </button>
     <p class="unanswered-note" id="unanswered-note">※ すべての質問に回答してください</p>
   </div>
@@ -635,40 +634,40 @@
         { id: "q2", text: "体調不良があるスタッフが申し出やすい雰囲気・相談ルートがある" },
       ]
     },
-    // カテゴリ2：腰痛・転倒への対策
+    // カテゴリ2：腰痛・転倒対策
     {
       category: "腰痛・転倒対策",
       icon: "🦺",
       questions: [
         { id: "q3", text: "防滑靴・防滑マットが全スタッフに支給・設置されている" },
         { id: "q4", text: "重量物（鍋・食材ケースなど）の持ち運びに、台車・カートなどのサポート機器がある" },
-        { id: "q5", text: "腰痛の原因・体への影響・正しい体の使い方について、スタッフに教育する機会がある" },
+        { id: "q5", text: "腰痛の原因・体への影響・正しい体の使い方について、スタッフに伝える機会がある" },
       ]
     },
-    // カテゴリ3：熱中症・環境対策
-    {
-      category: "熱中症・職場環境",
-      icon: "🌡️",
-      questions: [
-        { id: "q6", text: "厨房にWBGT計（暑さ指数計）または温湿度計が設置されている" },
-        { id: "q7", text: "熱中症対策のルール（休憩タイミング・水分補給・異変時の対応手順）が明文化されている" },
-      ]
-    },
-    // カテゴリ4：メンタル・勤務管理
+    // カテゴリ3：メンタル・勤務管理
     {
       category: "メンタルヘルス・勤務管理",
       icon: "🧠",
       questions: [
-        { id: "q8", text: "深夜シフトの連続回数に上限ルールを設けている" },
-        { id: "q9", text: "月1回以上、スタッフの体調・状態を確認する面談や対話の機会がある" },
+        { id: "q6", text: "深夜シフトの連続回数に上限ルールを設けている" },
+        { id: "q7", text: "月1回以上、スタッフの体調・状態を確認する面談や対話の機会がある" },
       ]
     },
-    // カテゴリ5：健診・外部連携
+    // カテゴリ4：健診・外部連携
     {
       category: "健診・外部専門家との連携",
       icon: "🏥",
       questions: [
-        { id: "q10", text: "パート・アルバイトを含む全スタッフが健康診断を受けられる仕組みがある" },
+        { id: "q8", text: "パート・アルバイトを含む全スタッフが健康診断を受けられる仕組みがある" },
+        { id: "q9", text: "スタッフの健康相談や職場改善について、相談できる外部の専門機関・専門家がいる" },
+      ]
+    },
+    // カテゴリ5：中堅・リーダー層支援
+    {
+      category: "中堅・リーダー層への支援",
+      icon: "👥",
+      questions: [
+        { id: "q10", text: "30〜50代の中堅・リーダー層が、育児・介護・自身の治療などを相談できる窓口や仕組みがある" },
       ]
     }
   ];
@@ -702,7 +701,7 @@
         qNum++;
         html += `
           <div class="question-card fade-in" id="card-${q.id}">
-            <div class="question-number">Q${String(qNum).padStart(2,'0')}</div>
+            <div class="question-number">チェック ${String(qNum).padStart(2,'0')}</div>
             <div class="question-text">${q.text}</div>
             <div class="options">
               <button class="option-btn" data-qid="${q.id}" data-val="2" onclick="selectAnswer('${q.id}', 2, this)">
@@ -727,26 +726,21 @@
   }
 
   function selectAnswer(qid, val, btn) {
-    // Clear previous selection for this question
     const card = document.getElementById('card-' + qid);
     card.querySelectorAll('.option-btn').forEach(b => {
       b.classList.remove('selected-yes', 'selected-partial', 'selected-no');
     });
-
-    // Apply new selection
     if (val === 2) btn.classList.add('selected-yes');
     else if (val === 1) btn.classList.add('selected-partial');
     else btn.classList.add('selected-no');
 
     answers[qid] = val;
 
-    // Update progress
     const answered = Object.keys(answers).length;
     const pct = (answered / TOTAL_Q) * 100;
     document.getElementById('progress-bar').style.width = pct + '%';
     document.getElementById('progress-count').textContent = answered + ' / ' + TOTAL_Q;
 
-    // Enable submit if all answered
     if (answered === TOTAL_Q) {
       document.getElementById('submit-btn').disabled = false;
       document.getElementById('unanswered-note').style.display = 'none';
@@ -759,22 +753,17 @@
       return;
     }
 
-    // Calculate total score and category scores
     const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
     const maxScore = TOTAL_Q * 2;
 
-    // Category scores
     const catScores = [];
-    let qIds = [];
     QUESTIONS.forEach(cat => {
       const ids = cat.questions.map(q => q.id);
       const score = ids.reduce((a, id) => a + (answers[id] || 0), 0);
       const max = ids.length * 2;
       catScores.push({ name: cat.category, icon: cat.icon, score, max, pct: Math.round((score/max)*100) });
-      qIds = qIds.concat(ids);
     });
 
-    // Determine level
     const pct = (totalScore / maxScore) * 100;
     let level, colorClass, emoji, title, desc;
 
@@ -783,29 +772,28 @@
       colorClass = 'green';
       emoji = '✅';
       title = '基盤はできています。\n次は定着と記録の仕組み化を。';
-      desc = '多くの項目で対策が取られています。ここからは「やっている」を「仕組みとして定着させる」フェーズです。記録・振り返りを加えることで、より強固な健康経営の基盤になります。';
+      desc = '多くの項目で取り組みが行われています。ここからは「やっている」を「仕組みとして定着させる」フェーズです。定期的な振り返りと記録を加えることで、より強固なウェルビーイング経営の基盤になります。';
     } else if (pct >= 40) {
       level = 'LEVEL B　部分的に整っています';
       colorClass = 'yellow';
       emoji = '⚠️';
-      title = 'できている部分を活かしつつ、\n抜け漏れを埋めよう。';
-      desc = '一部の対策は取られていますが、未対応の領域があります。特にスコアの低いカテゴリから優先的に手を打つことで、離職防止・労働災害低減の効果が期待できます。';
+      title = 'できている部分を活かしつつ、\n抜け漏れを埋めましょう。';
+      desc = '一部の取り組みは行われていますが、未対応の領域があります。スコアの低いカテゴリから優先的に手を打つことで、スタッフの定着と健康改善が期待できます。';
     } else {
       level = 'LEVEL C　今すぐ着手が必要です';
       colorClass = 'red';
       emoji = '🚨';
-      title = '多くのリスクが未対応です。\nまず「言える職場文化」から始めよう。';
-      desc = 'スタッフの健康リスクが高い状態にあります。大がかりな仕組み化より、まずはスタッフが体調不良を申し出られる雰囲気づくりと、台車・防滑靴など即日対応できるハード面の整備から始めましょう。';
+      title = '多くの項目が未対応です。\nまず「言える職場文化」から始めましょう。';
+      desc = 'スタッフの健康リスクが高い状態にあります。大がかりな仕組みより、まずスタッフが体調不良を申し出られる雰囲気づくりと、台車・防滑靴など即日対応できる環境整備から始めましょう。';
     }
 
-    // Build actions based on weak categories
     const weakCats = catScores.filter(c => c.pct < 60).sort((a,b) => a.pct - b.pct);
     const actionMap = {
       '身体症状の把握': '月1回の面談で「体の調子」を一言確認するルーティンを作りましょう。申告フォーム（紙1枚でも可）の整備も有効です。',
-      '腰痛・転倒対策': '台車・カートの導入と、入職時の動作教育（正しい荷物の持ち上げ方）をマニュアル化しましょう。腰痛申告→即重量作業免除のルールを明文化してください。',
-      '熱中症・職場環境': 'WBGT計（3,000円程度）を厨房に設置し、数値に応じた対応フロー（休憩・水分補給・異変時の連絡先）を1枚にまとめて掲示しましょう。',
-      'メンタルヘルス・勤務管理': '深夜シフトの連続上限をシフト作成ルールに明記しましょう。1on1面談を導入する際は「評価」ではなく「体調確認」が目的であることをスタッフに伝えることが大切です。',
+      '腰痛・転倒対策': '台車・カートの導入と、入職時の腰痛予防教育（正しい体の使い方）をマニュアル化しましょう。防滑マット・防滑靴の支給も優先度の高い対策です。',
+      'メンタルヘルス・勤務管理': '深夜シフトの連続上限をシフト作成ルールに明記しましょう。1on1面談は「体調確認」が目的であることをスタッフに伝えることが大切です。',
       '健診・外部専門家との連携': 'パート・アルバイトも含めた健診を「シフト公休扱い」で受診できる仕組みを整えましょう。産業保健総合支援センター（無料）への相談も活用できます。',
+      '中堅・リーダー層への支援': '30〜50代の中堅・リーダー層が育児・介護・自身の治療を相談できる窓口を設けましょう。前回記事でご紹介した「治療と仕事の両立支援」の制度整備が起点になります。',
     };
 
     let actionsHtml = '';
@@ -823,7 +811,6 @@
       actionsHtml = `<div class="action-item"><div class="action-text">現在の取り組みを継続・記録し、定期的な見直しを行いましょう。</div></div>`;
     }
 
-    // Render result
     const catResultsHtml = catScores.map(c => {
       const cc = c.pct >= 70 ? 'green' : c.pct >= 40 ? 'yellow' : 'red';
       return `
@@ -839,6 +826,29 @@
         </div>
       `;
     }).join('');
+
+    // レベル別CTA
+    const ctaMap = {
+      red: {
+        icon: '🚨',
+        heading: '職場リスクを早急に改善しませんか？',
+        body: '複数カテゴリで対策が不十分な状態です。放置すると労災・離職につながるリスクがあります。理学療法士が現状を整理し、<strong>具体的な改善ステップ</strong>をご提案します。まずはお気軽にご相談ください。',
+        btn: '無料で相談してみる →',
+      },
+      yellow: {
+        icon: '📋',
+        heading: '改善の余地あり。一緒に整理しませんか？',
+        body: '取り組めているカテゴリもありますが、まだ穴があります。専門家の視点で<strong>優先順位と具体的な打ち手</strong>を整理することで、より効率的に健康経営が進みます。',
+        btn: '改善策を相談する →',
+      },
+      green: {
+        icon: '✨',
+        heading: 'この取り組みを、仕組みとして定着させませんか？',
+        body: '現状は良好ですが、属人的な取り組みになっていませんか？<strong>記録・評価・継続</strong>の仕組みを整えることで、スタッフが変わっても健康経営が維持できます。',
+        btn: '仕組みづくりを相談する →',
+      },
+    };
+    const cta = ctaMap[colorClass] || ctaMap.yellow;
 
     const resultHtml = `
       <div class="result-hero fade-in">
@@ -867,51 +877,25 @@
         ${actionsHtml}
       </div>
 
-      ${(() => {
-        const ctaMap = {
-          red: {
-            icon: '🚨',
-            heading: '職場リスクを早急に改善しませんか？',
-            body: '複数カテゴリで対策が不十分な状態です。放置すると労災・離職につながるリスクがあります。理学療法士が現状を整理し、<strong>具体的な改善ステップ</strong>をご提案します。まずはお気軽にご相談ください。',
-            btn: '無料で相談してみる →',
-          },
-          yellow: {
-            icon: '📋',
-            heading: '改善の余地あり。一緒に整理しませんか？',
-            body: '取り組めているカテゴリもありますが、まだ穴があります。専門家の視点で<strong>優先順位と具体的な打ち手</strong>を整理することで、より効率的に健康経営が進みます。',
-            btn: '改善策を相談する →',
-          },
-          green: {
-            icon: '✨',
-            heading: 'この取り組みを、仕組みとして定着させませんか？',
-            body: '現状は良好ですが、属人的な取り組みになっていませんか？<strong>記録・評価・継続</strong>の仕組みを整えることで、スタッフが変わっても健康経営が維持できます。',
-            btn: '仕組みづくりを相談する →',
-          },
-        };
-        const c = ctaMap[colorClass] || ctaMap.yellow;
-        return `<div class="wellus-box fade-in">
-          <h3>${c.icon} ${c.heading}</h3>
-          <p>${c.body}</p>
-          <a href="https://well-us.jp" target="_blank" class="btn-wellus">${c.btn}</a>
-        </div>`;
-      })()}
+      <div class="wellus-box fade-in">
+        <h3>${cta.icon} ${cta.heading}</h3>
+        <p>${cta.body}</p>
+        <a href="https://well-us.jp" target="_blank" class="btn-wellus">${cta.btn}</a>
+      </div>
 
-      <button class="retry-btn fade-in" onclick="retryQuiz()">↩ もう一度診断する</button>
+      <button class="retry-btn fade-in" onclick="retryQuiz()">↩ もう一度チェックする</button>
 
       <p class="data-notice fade-in">※ 診断結果は統計データとして業界課題の把握に活用されます（氏名・連絡先などの個人情報は一切含まれません）</p>
     `;
 
-    // Show result
     document.getElementById('quiz-screen').style.display = 'none';
     document.getElementById('progress-wrap').style.display = 'none';
     document.getElementById('result-screen').style.display = 'block';
     document.getElementById('result-container').innerHTML = resultHtml;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Google フォームにサイレント送信
     sendToGoogleForm(totalScore, maxScore, level, catScores);
 
-    // Animate bars after render
     setTimeout(() => {
       document.querySelectorAll('[data-width]').forEach(el => {
         el.style.width = el.getAttribute('data-width');
@@ -930,28 +914,21 @@
 
   // ============================================================
   // Google フォーム サイレント送信
-  // 設定手順：
-  //   1. forms.google.com で新規フォームを作成
-  //   2. 下記 FORM_ACTION の [YOUR_FORM_ID] を実際のフォームIDに置き換える
-  //   3. 各 entry.[数字] をフォームの実際のentry IDに置き換える
-  //      （取得方法：フォームをプレビュー→右クリック→ページのソースで
-  //        "entry." を検索すると各フィールドのIDが見つかります）
   // ============================================================
   const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSexio7-PSfjCxomwaZJTobR-IonId6jcFe6Yjrb1gJLGuBzbQ/formResponse';
 
   const ENTRY_IDS = {
-    datetime:   'entry.1531920085',  // 診断日時
-    totalScore: 'entry.183538609',   // 総合スコア
-    level:      'entry.273263610',   // 結果レベル（A/B/C）
-    cat1:       'entry.202456058',   // 身体症状の把握
-    cat2:       'entry.1516366196',  // 腰痛・転倒対策
-    cat3:       'entry.590195127',   // 熱中症・職場環境
-    cat4:       'entry.1445909434',  // メンタルヘルス・勤務管理
-    cat5:       'entry.975570762',   // 健診・外部専門家との連携
+    datetime:   'entry.1531920085',
+    totalScore: 'entry.183538609',
+    level:      'entry.273263610',
+    cat1:       'entry.202456058',
+    cat2:       'entry.1516366196',
+    cat3:       'entry.590195127',
+    cat4:       'entry.1445909434',
+    cat5:       'entry.975570762',
   };
 
   function sendToGoogleForm(totalScore, maxScore, levelLabel, catScores) {
-    // FORM_ACTION が未設定（[YOUR_FORM_ID]のまま）なら送信しない
     if (FORM_ACTION.includes('[YOUR_FORM_ID]')) return;
 
     const now = new Date();
@@ -968,13 +945,12 @@
       [ENTRY_IDS.cat5]:       `${catScores[4].score}/${catScores[4].max}`,
     });
 
-    // no-cors で送信（レスポンスは読めないが記録には届く）
     fetch(FORM_ACTION, {
       method: 'POST',
       mode: 'no-cors',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString(),
-    }).catch(() => {}); // エラーは無視（ユーザー体験に影響させない）
+    }).catch(() => {});
   }
 </script>
 </body>
