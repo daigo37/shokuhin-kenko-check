@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>飲食業 職場の健康リスク診断｜WELL-US</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #1a7a5e;
+      --color-primary-light: #e8f5f0;
+      --color-primary-mid: #2fa87f;
+      --color-accent: #f5a623;
+      --color-danger: #e05252;
+      --color-warning: #e8a020;
+      --color-success: #2fa87f;
+      --color-text: #1a1a2e;
+      --color-text-sub: #555577;
+      --color-bg: #f8faf9;
+      --color-white: #ffffff;
+      --color-border: #ddeee8;
+      --radius: 12px;
+      --radius-lg: 20px;
+      --shadow: 0 4px 24px rgba(26,122,94,0.10);
+      --shadow-card: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    /* ========== HEADER ========== */
+    .site-header {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+    }
+    .logo span { color: var(--color-text-sub); font-weight: 400; font-size: 0.85rem; margin-left: 8px; }
+
+    /* ========== HERO ========== */
+    .hero {
+      background: linear-gradient(135deg, #1a7a5e 0%, #2fa87f 60%, #4ecfa0 100%);
+      color: white;
+      padding: 56px 24px 48px;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 50px;
+      padding: 4px 16px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(1.4rem, 4vw, 2rem);
+      font-weight: 900;
+      line-height: 1.4;
+      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+    }
+    .hero p {
+      font-size: 0.92rem;
+      opacity: 0.88;
+      max-width: 480px;
+      margin: 0 auto 24px;
+      line-height: 1.7;
+    }
+    .hero-meta {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      opacity: 0.85;
+    }
+    .hero-meta-item svg { width: 14px; height: 14px; }
+
+    /* ========== CONTAINER ========== */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    /* ========== PROGRESS ========== */
+    .progress-wrap {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .progress-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .progress-label { font-size: 0.8rem; color: var(--color-text-sub); font-weight: 500; }
+    .progress-count { font-size: 0.8rem; color: var(--color-primary); font-weight: 700; }
+    .progress-bar-bg {
+      height: 6px;
+      background: var(--color-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-primary-mid));
+      border-radius: 3px;
+      transition: width 0.4s ease;
+      width: 0%;
+    }
+
+    /* ========== QUIZ SCREEN ========== */
+    #quiz-screen { padding: 32px 0 60px; }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding: 12px 16px;
+      background: var(--color-primary-light);
+      border-radius: var(--radius);
+      border-left: 4px solid var(--color-primary);
+    }
+    .category-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--color-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .category-icon svg { width: 16px; height: 16px; fill: white; }
+    .category-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.02em;
+    }
+
+    .question-card {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--color-border);
+      transition: opacity 0.3s;
+    }
+    .question-number {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .question-text {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border: 2px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--color-white);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 0.9rem;
+      color: var(--color-text);
+      text-align: left;
+      font-weight: 500;
+    }
+    .option-btn:hover {
+      border-color: var(--color-primary);
+      background: var(--color-primary-light);
+    }
+    .option-btn.selected-yes {
+      border-color: var(--color-success);
+      background: #f0faf5;
+      color: #1a5e3e;
+    }
+    .option-btn.selected-partial {
+      border-color: var(--color-warning);
+      background: #fff8ee;
+      color: #7a4a00;
+    }
+    .option-btn.selected-no {
+      border-color: var(--color-danger);
+      background: #fff0f0;
+      color: #7a1a1a;
+    }
+    .option-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--color-border);
+      flex-shrink: 0;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .option-btn.selected-yes .option-dot {
+      background: var(--color-success);
+      border-color: var(--color-success);
+    }
+    .option-btn.selected-partial .option-dot {
+      background: var(--color-warning);
+      border-color: var(--color-warning);
+    }
+    .option-btn.selected-no .option-dot {
+      background: var(--color-danger);
+      border-color: var(--color-danger);
+    }
+    .option-dot-inner {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .option-btn.selected-yes .option-dot-inner,
+    .option-btn.selected-partial .option-dot-inner,
+    .option-btn.selected-no .option-dot-inner { opacity: 1; }
+
+    .submit-wrap {
+      text-align: center;
+      padding: 24px 0 8px;
+    }
+    .btn-submit {
+      background: linear-gradient(135deg, var(--color-primary), var(--color-primary-mid));
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 16px 48px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(26,122,94,0.3);
+      transition: all 0.2s;
+      letter-spacing: 0.04em;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(26,122,94,0.4);
+    }
+    .btn-submit:disabled {
+      background: #ccc;
+      box-shadow: none;
+      transform: none;
+      cursor: not-allowed;
+    }
+    .unanswered-note {
+      font-size: 0.8rem;
+      color: var(--color-danger);
+      margin-top: 8px;
+      display: none;
+    }
+
+    /* ========== RESULT SCREEN ========== */
+    #result-screen { display: none; padding: 32px 0 60px; }
+
+    .result-hero {
+      text-align: center;
+      padding: 36px 24px 32px;
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      margin-bottom: 28px;
+      border: 1px solid var(--color-border);
+    }
+    .result-icon {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      font-size: 2rem;
+    }
+    .result-icon.green { background: #e8f5f0; }
+    .result-icon.yellow { background: #fff8ee; }
+    .result-icon.red { background: #fff0f0; }
+
+    .result-level {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      margin-bottom: 8px;
+    }
+    .result-level.green { color: var(--color-success); }
+    .result-level.yellow { color: var(--color-warning); }
+    .result-level.red { color: var(--color-danger); }
+
+    .result-title {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--color-text);
+      line-height: 1.4;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .result-desc {
+      font-size: 0.9rem;
+      color: var(--color-text-sub);
+      line-height: 1.8;
+      max-width: 480px;
+      margin: 0 auto 24px;
+    }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .score-num {
+      font-size: 3rem;
+      font-weight: 900;
+      font-family: 'Inter', sans-serif;
+      line-height: 1;
+    }
+    .score-num.green { color: var(--color-success); }
+    .score-num.yellow { color: var(--color-warning); }
+    .score-num.red { color: var(--color-danger); }
+    .score-max { font-size: 1.1rem; color: var(--color-text-sub); font-weight: 500; padding-top: 16px; }
+
+    /* ========== SCORE BAR ========== */
+    .score-bar-wrap {
+      margin: 20px 0 0;
+    }
+    .score-bar-bg {
+      height: 10px;
+      background: var(--color-border);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 5px;
+      transition: width 1s ease;
+    }
+    .score-bar-fill.green { background: linear-gradient(90deg, #1a7a5e, #4ecfa0); }
+    .score-bar-fill.yellow { background: linear-gradient(90deg, #e8a020, #f5c842); }
+    .score-bar-fill.red { background: linear-gradient(90deg, #e05252, #f08080); }
+
+    /* ========== CATEGORY RESULTS ========== */
+    .section-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-text-sub);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .category-result-card {
+      background: var(--color-white);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 12px;
+      border: 1px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .cat-icon-sm {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+    .cat-icon-sm.green { background: #e8f5f0; }
+    .cat-icon-sm.yellow { background: #fff8ee; }
+    .cat-icon-sm.red { background: #fff0f0; }
+
+    .cat-result-info { flex: 1; }
+    .cat-result-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--color-text);
+      margin-bottom: 4px;
+    }
+    .cat-result-bar-bg {
+      height: 5px;
+      background: var(--color-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .cat-result-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+    .cat-result-bar-fill.green { background: var(--color-success); }
+    .cat-result-bar-fill.yellow { background: var(--color-warning); }
+    .cat-result-bar-fill.red { background: var(--color-danger); }
+
+    .cat-score-text {
+      font-size: 0.78rem;
+      font-weight: 700;
+      flex-shrink: 0;
+      width: 48px;
+      text-align: right;
+    }
+    .cat-score-text.green { color: var(--color-success); }
+    .cat-score-text.yellow { color: var(--color-warning); }
+    .cat-score-text.red { color: var(--color-danger); }
+
+    /* ========== ACTION ITEMS ========== */
+    .action-section {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      margin-bottom: 20px;
+      border: 1px solid var(--color-border);
+    }
+    .action-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .action-item:last-child { border-bottom: none; }
+    .action-priority {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 900;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .action-priority.high { background: #fff0f0; color: var(--color-danger); }
+    .action-priority.mid { background: #fff8ee; color: var(--color-warning); }
+    .action-priority.low { background: #e8f5f0; color: var(--color-success); }
+
+    .action-text { font-size: 0.88rem; color: var(--color-text); line-height: 1.7; }
+    .action-text strong { color: var(--color-primary); }
+
+    /* ========== WELLUS BOX ========== */
+    .wellus-box {
+      background: linear-gradient(135deg, #1a7a5e 0%, #2fa87f 100%);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      color: white;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .wellus-box h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+    .wellus-box p { font-size: 0.85rem; opacity: 0.9; line-height: 1.7; margin-bottom: 18px; }
+    .btn-wellus {
+      display: inline-block;
+      background: white;
+      color: var(--color-primary);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 12px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: all 0.2s;
+      font-family: 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-wellus:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+    .data-notice {
+      font-size: 0.72rem;
+      color: var(--color-text-sub);
+      text-align: center;
+      margin-top: 8px;
+      padding: 10px 16px;
+      background: #f7f8fa;
+      border-radius: 6px;
+      line-height: 1.7;
+    }
+
+    .retry-btn {
+      display: block;
+      text-align: center;
+      padding: 14px;
+      border: 2px solid var(--color-border);
+      border-radius: 50px;
+      color: var(--color-text-sub);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: white;
+      font-family: 'Noto Sans JP', sans-serif;
+    }
+    .retry-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+    /* ========== ANIMATION ========== */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-in { animation: fadeInUp 0.4s ease forwards; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 480px) {
+      .hero { padding: 40px 16px 36px; }
+      .question-card { padding: 20px 16px; }
+      .option-btn { padding: 12px 14px; font-size: 0.85rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">♡ WELL-US <span>by りぷらす</span></div>
+</header>
+
+<!-- PROGRESS BAR -->
+<div class="progress-wrap" id="progress-wrap" style="display:none;">
+  <div class="container">
+    <div class="progress-info">
+      <span class="progress-label">回答の進捗</span>
+      <span class="progress-count" id="progress-count">0 / 11</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-bar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="hero-section">
+  <div class="container">
+    <div class="hero-tag">🍽️ 飲食業向け 無料診断</div>
+    <h1>職場の健康リスク<br>チェックリスト</h1>
+    <p>10の質問に答えるだけで、あなたの職場の健康リスクレベルと、優先して取り組むべき課題がわかります。</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        所要時間：約3分
+      </div>
+      <div class="hero-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        経営者・人事担当者向け
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- START BUTTON (within hero flow) -->
+<div style="text-align:center; padding: 28px 16px 0;" id="start-area">
+  <button class="btn-submit" onclick="startQuiz()" style="font-size:1.05rem; padding:18px 56px;">
+    診断をはじめる →
+  </button>
+</div>
+
+<!-- QUIZ SCREEN -->
+<div id="quiz-screen" style="display:none;">
+  <div class="container" id="questions-container"></div>
+  <div class="container submit-wrap">
+    <button class="btn-submit" id="submit-btn" onclick="submitQuiz()" disabled>
+      診断結果を見る
+    </button>
+    <p class="unanswered-note" id="unanswered-note">※ すべての質問に回答してください</p>
+  </div>
+</div>
+
+<!-- RESULT SCREEN -->
+<div id="result-screen">
+  <div class="container" id="result-container"></div>
+</div>
+
+<script>
+  const QUESTIONS = [
+    // カテゴリ1：身体症状の把握
+    {
+      category: "身体症状の把握",
+      icon: "🩺",
+      questions: [
+        { id: "q1", text: "腰痛・肩こり・膝の痛みなど、身体症状を抱えているスタッフを把握している" },
+        { id: "q2", text: "体調不良があるスタッフが申し出やすい雰囲気・相談ルートがある" },
+      ]
+    },
+    // カテゴリ2：腰痛・転倒への対策
+    {
+      category: "腰痛・転倒対策",
+      icon: "🦺",
+      questions: [
+        { id: "q3", text: "防滑靴・防滑マットが全スタッフに支給・設置されている" },
+        { id: "q4", text: "重量物（鍋・食材ケースなど）の持ち運びに、台車・カートなどのサポート機器がある" },
+        { id: "q5", text: "腰痛の原因・体への影響・正しい体の使い方について、スタッフに教育する機会がある" },
+      ]
+    },
+    // カテゴリ3：熱中症・環境対策
+    {
+      category: "熱中症・職場環境",
+      icon: "🌡️",
+      questions: [
+        { id: "q6", text: "厨房にWBGT計（暑さ指数計）または温湿度計が設置されている" },
+        { id: "q7", text: "熱中症対策のルール（休憩タイミング・水分補給・異変時の対応手順）が明文化されている" },
+      ]
+    },
+    // カテゴリ4：メンタル・勤務管理
+    {
+      category: "メンタルヘルス・勤務管理",
+      icon: "🧠",
+      questions: [
+        { id: "q8", text: "深夜シフトの連続回数に上限ルールを設けている" },
+        { id: "q9", text: "月1回以上、スタッフの体調・状態を確認する面談や対話の機会がある" },
+      ]
+    },
+    // カテゴリ5：健診・外部連携
+    {
+      category: "健診・外部専門家との連携",
+      icon: "🏥",
+      questions: [
+        { id: "q10", text: "パート・アルバイトを含む全スタッフが健康診断を受けられる仕組みがある" },
+      ]
+    }
+  ];
+
+  const TOTAL_Q = QUESTIONS.reduce((a, c) => a + c.questions.length, 0);
+  let answers = {};
+
+  function startQuiz() {
+    document.getElementById('hero-section').style.display = 'none';
+    document.getElementById('start-area').style.display = 'none';
+    document.getElementById('progress-wrap').style.display = 'block';
+    document.getElementById('progress-count').textContent = '0 / ' + TOTAL_Q;
+    document.getElementById('quiz-screen').style.display = 'block';
+    renderQuestions();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function renderQuestions() {
+    const container = document.getElementById('questions-container');
+    let html = '';
+    let qNum = 0;
+
+    QUESTIONS.forEach(cat => {
+      html += `
+        <div class="category-header">
+          <div class="category-icon"><svg viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="10"/></svg></div>
+          <span class="category-name">${cat.icon} ${cat.category}</span>
+        </div>
+      `;
+      cat.questions.forEach(q => {
+        qNum++;
+        html += `
+          <div class="question-card fade-in" id="card-${q.id}">
+            <div class="question-number">Q${String(qNum).padStart(2,'0')}</div>
+            <div class="question-text">${q.text}</div>
+            <div class="options">
+              <button class="option-btn" data-qid="${q.id}" data-val="2" onclick="selectAnswer('${q.id}', 2, this)">
+                <span class="option-dot"><span class="option-dot-inner"></span></span>
+                はい（できている）
+              </button>
+              <button class="option-btn" data-qid="${q.id}" data-val="1" onclick="selectAnswer('${q.id}', 1, this)">
+                <span class="option-dot"><span class="option-dot-inner"></span></span>
+                どちらとも言えない
+              </button>
+              <button class="option-btn" data-qid="${q.id}" data-val="0" onclick="selectAnswer('${q.id}', 0, this)">
+                <span class="option-dot"><span class="option-dot-inner"></span></span>
+                いいえ（できていない）
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    });
+
+    container.innerHTML = html;
+  }
+
+  function selectAnswer(qid, val, btn) {
+    // Clear previous selection for this question
+    const card = document.getElementById('card-' + qid);
+    card.querySelectorAll('.option-btn').forEach(b => {
+      b.classList.remove('selected-yes', 'selected-partial', 'selected-no');
+    });
+
+    // Apply new selection
+    if (val === 2) btn.classList.add('selected-yes');
+    else if (val === 1) btn.classList.add('selected-partial');
+    else btn.classList.add('selected-no');
+
+    answers[qid] = val;
+
+    // Update progress
+    const answered = Object.keys(answers).length;
+    const pct = (answered / TOTAL_Q) * 100;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = answered + ' / ' + TOTAL_Q;
+
+    // Enable submit if all answered
+    if (answered === TOTAL_Q) {
+      document.getElementById('submit-btn').disabled = false;
+      document.getElementById('unanswered-note').style.display = 'none';
+    }
+  }
+
+  function submitQuiz() {
+    if (Object.keys(answers).length < TOTAL_Q) {
+      document.getElementById('unanswered-note').style.display = 'block';
+      return;
+    }
+
+    // Calculate total score and category scores
+    const totalScore = Object.values(answers).reduce((a, b) => a + b, 0);
+    const maxScore = TOTAL_Q * 2;
+
+    // Category scores
+    const catScores = [];
+    let qIds = [];
+    QUESTIONS.forEach(cat => {
+      const ids = cat.questions.map(q => q.id);
+      const score = ids.reduce((a, id) => a + (answers[id] || 0), 0);
+      const max = ids.length * 2;
+      catScores.push({ name: cat.category, icon: cat.icon, score, max, pct: Math.round((score/max)*100) });
+      qIds = qIds.concat(ids);
+    });
+
+    // Determine level
+    const pct = (totalScore / maxScore) * 100;
+    let level, colorClass, emoji, title, desc;
+
+    if (pct >= 70) {
+      level = 'LEVEL A　取り組みが進んでいます';
+      colorClass = 'green';
+      emoji = '✅';
+      title = '基盤はできています。\n次は定着と記録の仕組み化を。';
+      desc = '多くの項目で対策が取られています。ここからは「やっている」を「仕組みとして定着させる」フェーズです。記録・振り返りを加えることで、より強固な健康経営の基盤になります。';
+    } else if (pct >= 40) {
+      level = 'LEVEL B　部分的に整っています';
+      colorClass = 'yellow';
+      emoji = '⚠️';
+      title = 'できている部分を活かしつつ、\n抜け漏れを埋めよう。';
+      desc = '一部の対策は取られていますが、未対応の領域があります。特にスコアの低いカテゴリから優先的に手を打つことで、離職防止・労働災害低減の効果が期待できます。';
+    } else {
+      level = 'LEVEL C　今すぐ着手が必要です';
+      colorClass = 'red';
+      emoji = '🚨';
+      title = '多くのリスクが未対応です。\nまず「言える職場文化」から始めよう。';
+      desc = 'スタッフの健康リスクが高い状態にあります。大がかりな仕組み化より、まずはスタッフが体調不良を申し出られる雰囲気づくりと、台車・防滑靴など即日対応できるハード面の整備から始めましょう。';
+    }
+
+    // Build actions based on weak categories
+    const weakCats = catScores.filter(c => c.pct < 60).sort((a,b) => a.pct - b.pct);
+    const actionMap = {
+      '身体症状の把握': '月1回の面談で「体の調子」を一言確認するルーティンを作りましょう。申告フォーム（紙1枚でも可）の整備も有効です。',
+      '腰痛・転倒対策': '台車・カートの導入と、入職時の動作教育（正しい荷物の持ち上げ方）をマニュアル化しましょう。腰痛申告→即重量作業免除のルールを明文化してください。',
+      '熱中症・職場環境': 'WBGT計（3,000円程度）を厨房に設置し、数値に応じた対応フロー（休憩・水分補給・異変時の連絡先）を1枚にまとめて掲示しましょう。',
+      'メンタルヘルス・勤務管理': '深夜シフトの連続上限をシフト作成ルールに明記しましょう。1on1面談を導入する際は「評価」ではなく「体調確認」が目的であることをスタッフに伝えることが大切です。',
+      '健診・外部専門家との連携': 'パート・アルバイトも含めた健診を「シフト公休扱い」で受診できる仕組みを整えましょう。産業保健総合支援センター（無料）への相談も活用できます。',
+    };
+
+    let actionsHtml = '';
+    weakCats.slice(0, 3).forEach((cat, i) => {
+      const priority = i === 0 ? 'high' : i === 1 ? 'mid' : 'low';
+      const priorityLabel = i === 0 ? '優先' : i === 1 ? '次に' : '追加';
+      actionsHtml += `
+        <div class="action-item">
+          <div class="action-priority ${priority}">${priorityLabel}</div>
+          <div class="action-text"><strong>${cat.icon} ${cat.name}</strong><br>${actionMap[cat.name] || ''}</div>
+        </div>
+      `;
+    });
+    if (!actionsHtml) {
+      actionsHtml = `<div class="action-item"><div class="action-text">現在の取り組みを継続・記録し、定期的な見直しを行いましょう。</div></div>`;
+    }
+
+    // Render result
+    const catResultsHtml = catScores.map(c => {
+      const cc = c.pct >= 70 ? 'green' : c.pct >= 40 ? 'yellow' : 'red';
+      return `
+        <div class="category-result-card">
+          <div class="cat-icon-sm ${cc}">${c.icon}</div>
+          <div class="cat-result-info">
+            <div class="cat-result-name">${c.name}</div>
+            <div class="cat-result-bar-bg">
+              <div class="cat-result-bar-fill ${cc}" style="width:0%" data-width="${c.pct}%"></div>
+            </div>
+          </div>
+          <div class="cat-score-text ${cc}">${c.score}/${c.max}</div>
+        </div>
+      `;
+    }).join('');
+
+    const resultHtml = `
+      <div class="result-hero fade-in">
+        <div class="result-icon ${colorClass}">${emoji}</div>
+        <div class="result-level ${colorClass}">${level}</div>
+        <div class="result-title">${title.replace('\n','<br>')}</div>
+        <div class="result-desc">${desc}</div>
+        <div class="score-display">
+          <span class="score-num ${colorClass}">${totalScore}</span>
+          <span class="score-max">/ ${maxScore}点</span>
+        </div>
+        <div class="score-bar-wrap">
+          <div class="score-bar-bg">
+            <div class="score-bar-fill ${colorClass}" style="width:0%" data-width="${pct}%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:28px;" class="fade-in">
+        <div class="section-title">カテゴリ別スコア</div>
+        ${catResultsHtml}
+      </div>
+
+      <div class="action-section fade-in">
+        <div class="section-title">優先して取り組むべきこと</div>
+        ${actionsHtml}
+      </div>
+
+      ${(() => {
+        const ctaMap = {
+          red: {
+            icon: '🚨',
+            heading: '職場リスクを早急に改善しませんか？',
+            body: '複数カテゴリで対策が不十分な状態です。放置すると労災・離職につながるリスクがあります。理学療法士が現状を整理し、<strong>具体的な改善ステップ</strong>をご提案します。まずはお気軽にご相談ください。',
+            btn: '無料で相談してみる →',
+          },
+          yellow: {
+            icon: '📋',
+            heading: '改善の余地あり。一緒に整理しませんか？',
+            body: '取り組めているカテゴリもありますが、まだ穴があります。専門家の視点で<strong>優先順位と具体的な打ち手</strong>を整理することで、より効率的に健康経営が進みます。',
+            btn: '改善策を相談する →',
+          },
+          green: {
+            icon: '✨',
+            heading: 'この取り組みを、仕組みとして定着させませんか？',
+            body: '現状は良好ですが、属人的な取り組みになっていませんか？<strong>記録・評価・継続</strong>の仕組みを整えることで、スタッフが変わっても健康経営が維持できます。',
+            btn: '仕組みづくりを相談する →',
+          },
+        };
+        const c = ctaMap[colorClass] || ctaMap.yellow;
+        return `<div class="wellus-box fade-in">
+          <h3>${c.icon} ${c.heading}</h3>
+          <p>${c.body}</p>
+          <a href="https://well-us.jp" target="_blank" class="btn-wellus">${c.btn}</a>
+        </div>`;
+      })()}
+
+      <button class="retry-btn fade-in" onclick="retryQuiz()">↩ もう一度診断する</button>
+
+      <p class="data-notice fade-in">※ 診断結果は統計データとして業界課題の把握に活用されます（氏名・連絡先などの個人情報は一切含まれません）</p>
+    `;
+
+    // Show result
+    document.getElementById('quiz-screen').style.display = 'none';
+    document.getElementById('progress-wrap').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'block';
+    document.getElementById('result-container').innerHTML = resultHtml;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Google フォームにサイレント送信
+    sendToGoogleForm(totalScore, maxScore, level, catScores);
+
+    // Animate bars after render
+    setTimeout(() => {
+      document.querySelectorAll('[data-width]').forEach(el => {
+        el.style.width = el.getAttribute('data-width');
+      });
+    }, 300);
+  }
+
+  function retryQuiz() {
+    answers = {};
+    document.getElementById('result-screen').style.display = 'none';
+    document.getElementById('result-container').innerHTML = '';
+    document.getElementById('hero-section').style.display = 'block';
+    document.getElementById('start-area').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ============================================================
+  // Google フォーム サイレント送信
+  // 設定手順：
+  //   1. forms.google.com で新規フォームを作成
+  //   2. 下記 FORM_ACTION の [YOUR_FORM_ID] を実際のフォームIDに置き換える
+  //   3. 各 entry.[数字] をフォームの実際のentry IDに置き換える
+  //      （取得方法：フォームをプレビュー→右クリック→ページのソースで
+  //        "entry." を検索すると各フィールドのIDが見つかります）
+  // ============================================================
+  const FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSexio7-PSfjCxomwaZJTobR-IonId6jcFe6Yjrb1gJLGuBzbQ/formResponse';
+
+  const ENTRY_IDS = {
+    datetime:   'entry.1531920085',  // 診断日時
+    totalScore: 'entry.183538609',   // 総合スコア
+    level:      'entry.273263610',   // 結果レベル（A/B/C）
+    cat1:       'entry.202456058',   // 身体症状の把握
+    cat2:       'entry.1516366196',  // 腰痛・転倒対策
+    cat3:       'entry.590195127',   // 熱中症・職場環境
+    cat4:       'entry.1445909434',  // メンタルヘルス・勤務管理
+    cat5:       'entry.975570762',   // 健診・外部専門家との連携
+  };
+
+  function sendToGoogleForm(totalScore, maxScore, levelLabel, catScores) {
+    // FORM_ACTION が未設定（[YOUR_FORM_ID]のまま）なら送信しない
+    if (FORM_ACTION.includes('[YOUR_FORM_ID]')) return;
+
+    const now = new Date();
+    const datetime = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+    const params = new URLSearchParams({
+      [ENTRY_IDS.datetime]:   datetime,
+      [ENTRY_IDS.totalScore]: `${totalScore}/${maxScore}`,
+      [ENTRY_IDS.level]:      levelLabel,
+      [ENTRY_IDS.cat1]:       `${catScores[0].score}/${catScores[0].max}`,
+      [ENTRY_IDS.cat2]:       `${catScores[1].score}/${catScores[1].max}`,
+      [ENTRY_IDS.cat3]:       `${catScores[2].score}/${catScores[2].max}`,
+      [ENTRY_IDS.cat4]:       `${catScores[3].score}/${catScores[3].max}`,
+      [ENTRY_IDS.cat5]:       `${catScores[4].score}/${catScores[4].max}`,
+    });
+
+    // no-cors で送信（レスポンスは読めないが記録には届く）
+    fetch(FORM_ACTION, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: params.toString(),
+    }).catch(() => {}); // エラーは無視（ユーザー体験に影響させない）
+  }
+</script>
+</body>
+</html>
